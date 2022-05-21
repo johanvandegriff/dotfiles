@@ -1,0 +1,131 @@
+OPTIONS=number_pad:0
+#OPTIONS=role:hea,race:gno,align:neu,gender:random
+#OPTIONS=role:val,race:dwa,align:law,gender:fem
+#OPTIONS=nopet
+#OPTIONS=!bones
+
+OPTIONS=fruit:magic lump
+AUTOPICKUP_EXCEPTION="<magic lump"
+#OPTIONS=fruit:garbanzo bean
+#AUTOPICKUP_EXCEPTION="<garbanzo bean"
+
+
+AUTOCOMPLETE=zap,pray,force
+OPTIONS=!cmdassist
+OPTIONS=!timed_delay
+OPTIONS=!sparkle,!legacy,showexp,showscore,time,hitpointbar,autodescribe
+
+#3.7 OPTIONS=hp_notify
+#3.7 OPTIONS=!safe_wait
+OPTIONS=color,autodig,lit_corridor
+OPTIONS=pickup_types:$?!/="+
+OPTIONS=autopickup,pickup_burden:unencumbered
+OPTIONS=boulder:0
+SYMBOLS=S_ghost:8
+OPTIONS=hilite_pet
+OPTIONS=windowtype:curses
+OPTIONS=vt_tiledata
+#BIND=v:fight
+#BIND=v:repeat
+#AUTOPICKUP_EXCEPTION="<tripe ration"
+AUTOPICKUP_EXCEPTION="<HTML dumpling"
+OPTIONS=perm_invent
+OPTIONS=HILITE_STATUS: hitpoints/<100%/bright-green/<99%/green
+OPTIONS=HILITE_STATUS: hitpoints/<80%/yellow/<60%/brown/<40%/orange/<20%/red
+OPTIONS=HILITE_STATUS: hitpoints/<10%/bright-red/<5/bright-red&inverse
+OPTIONS=HILITE_STATUS: power/<100%/bright-cyan/<80%/cyan
+OPTIONS=HILITE_STATUS: power/<60%/bright-blue/<40%/blue/<20%/magenta/<4/inverse
+OPTIONS=HILITE_STATUS: hitpoints-max/always/green/up/bright-green/down/orange
+OPTIONS=HILITE_STATUS: power-max/always/cyan/up/bright-cyan/down/bright-blue
+#OPTIONS=altmeta
+
+OPTIONS=HILITE_STATUS: hunger/Satiated/yellow/Hungry/brown
+OPTIONS=HILITE_STATUS: hunger/Weak/orange/Fainting/red
+OPTIONS=runmode:teleport
+OPTIONS=HILITE_STATUS: carrying-capacity/Burdened/yellow/Stressed/brown
+OPTIONS=HILITE_STATUS: carrying-capacity/Strained/orange/
+OPTIONS=HILITE_STATUS: carrying-capacity/Overtaxed/bright-red/Overloaded/gray&inverse
+
+MSGTYPE=stop "The couatl swings itself around you!"
+MSGTYPE=stop "The electric eel swings itself around you!"
+MSGTYPE=stop "The giant eel swings itself around you!"
+MSGTYPE=stop "The kraken swings itself around you!"
+MSGTYPE=stop "The python grabs you!"
+MSGTYPE=stop "You don't feel very well."
+MSGTYPE=stop "You are turning a little green."
+MSGTYPE=stop "Your limbs are getting oozy."
+MSGTYPE=stop "Your skin begins to peel away."
+MSGTYPE=stop "You are turning into a green slime."
+MSGTYPE=stop "You are slowing down."
+MSGTYPE=stop "Your limbs are stiffening."
+MSGTYPE=stop "It constricts your throat!"
+MSGTYPE=stop "You find it hard to breathe."
+MSGTYPE=stop "You're gasping for air."
+MSGTYPE=stop "Your blood is having trouble reaching your brain."
+MSGTYPE=stop "You can no longer breathe."
+MSGTYPE=stop "You're turning blue."
+MSGTYPE=stop "Your consciousness is fading."
+MSGTYPE=stop "You feel deathly sick."
+MSGTYPE=stop "You feel much worse."
+MSGTYPE=stop "You feel a strange vibration*"
+MSGTYPE=stop "You faint from lack of food."
+MSGTYPE=stop "You are beginning to feel weak."
+MSGTYPE=stop "Wizard needs food, badly!"
+MSGTYPE=stop "Valkyrie needs food, badly!"
+
+MSGTYPE=stop "You feel feverish."
+MSGTYPE=stop "You are frozen by the .*"
+MSGTYPE=stop ".* snatches .*!"
+MSGTYPE=stop "So thou thought thou couldst kill me, fool."
+
+MSGTYPE=hide "The .* butts the .*"
+MSGTYPE=hide "The .* squeezes the .*"
+MSGTYPE=hide "The .* stings the .*"
+MSGTYPE=hide "The .* swallows the .*"
+MSGTYPE=hide "The .* is regurgitated!"
+MSGTYPE=hide "The frost doesn't seem to chill the .*"
+MSGTYPE=hide "The poison doesn't seem to affect the .*"
+MSGTYPE=hide "The poison doesn't seem to affect it."
+MSGTYPE=hide "The fire doesn't seem to burn the .*!"
+MSGTYPE=hide "The air crackles around the .*"
+MSGTYPE=hide "The .* is mildly warmed."
+MSGTYPE=hide "The .* is already on fire!"
+MSGTYPE=hide "The .* coughs!"
+MSGTYPE=hide "The Book of the Dead .*"
+
+OPTIONS=menucolors
+MENUCOLOR=" blessed "=green
+MENUCOLOR=" holy "=green
+MENUCOLOR=" cursed "=red
+MENUCOLOR=" unholy "=red
+MENUCOLOR=" cursed .* (being worn)"=orange&underline
+
+AUTOPICKUP_EXCEPTION=">:0)*"
+#AUTOPICKUP_EXCEPTION="<food ration"
+#AUTOPICKUP_EXCEPTION="<gunyoki"
+AUTOPICKUP_EXCEPTION="<key"
+AUTOPICKUP_EXCEPTION="<blindfold"
+AUTOPICKUP_EXCEPTION="<towel"
+AUTOPICKUP_EXCEPTION="<horn"
+AUTOPICKUP_EXCEPTION="<drum"
+AUTOPICKUP_EXCEPTION="<lamp"
+AUTOPICKUP_EXCEPTION="<magic lamp"
+#AUTOPICKUP_EXCEPTION="<wand of wishing"
+AUTOPICKUP_EXCEPTION="<lembas wafer"
+AUTOPICKUP_EXCEPTION="<magic marker"
+AUTOPICKUP_EXCEPTION="<flute"
+AUTOPICKUP_EXCEPTION="<harp"
+AUTOPICKUP_EXCEPTION="<egg"
+AUTOPICKUP_EXCEPTION=">scroll .* scare"
+#AUTOPICKUP_EXCEPTION=">scroll .* scare monster"
+AUTOPICKUP_EXCEPTION=">monkey corpse"
+AUTOPICKUP_EXCEPTION=">paperback book"
+AUTOPICKUP_EXCEPTION="<silver saber"
+AUTOPICKUP_EXCEPTION="<silver dagger"
+AUTOPICKUP_EXCEPTION="<lump? of royal jelly"
+AUTOPICKUP_EXCEPTION="<dart"
+AUTOPICKUP_EXCEPTION="<throwing star"
+#AUTOPICKUP_EXCEPTION="<arrow"
+#AUTOPICKUP_EXCEPTION="<ya"
+#AUTOPICKUP_EXCEPTION="<crossbow bolt"
+#AUTOPICKUP_EXCEPTION="<shuriken"

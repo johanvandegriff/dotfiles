@@ -1,0 +1,14 @@
+- name: install nethack
+  ansible.builtin.package:
+    name:
+      - nethack
+    state: present
+    update_cache: yes
+  become: yes
+- name: symlink nethack dotfile
+  file:
+    src: "{{role_path}}/files/nethackrc"
+    path: "~/.nethackrc"
+    state: link
+#  include_role:
+#    name: dotfiles

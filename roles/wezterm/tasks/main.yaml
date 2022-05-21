@@ -1,0 +1,18 @@
+- name: install wezterm
+  ansible.builtin.package:
+    name:
+      - wezterm
+    state: present
+    update_cache: yes
+  become: yes
+- name: make wezterm dir
+  file:
+    path: "~/.config/wezterm/"
+    state: directory
+- name: symlink wezterm dotfile
+  file:
+    src: "{{role_path}}/files/wezterm.lua"
+    path: "~/.config/wezterm/wezterm.lua"
+    state: link
+#  include_role:
+#    name: dotfiles

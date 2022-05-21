@@ -1,0 +1,201 @@
+alias wget="wget --no-hsts"
+
+# Use powerline
+USE_POWERLINE="true"
+# Source manjaro-zsh-configuration
+if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+  source /usr/share/zsh/manjaro-zsh-config
+fi
+# Use manjaro zsh prompt
+if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
+  source /usr/share/zsh/manjaro-zsh-prompt
+fi
+
+export PATH=$PATH:$HOME/nextcloud/bin
+
+HISTSIZE=10000000
+SAVEHIST=10000000
+HISTFILE=~/.zhistory
+
+alias c="wl-copy"
+alias v="wl-paste"
+
+alias gs="git status"
+alias gd="git diff"
+alias gcsam="git commit -S -am"
+alias gcsm="git commit -S -m"
+alias gpa="git pushall"
+
+alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
+alias chmox="chmod +x"
+
+# the terminal rickroll
+alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
+
+alias e="nano"
+alias se="sudo nano"
+#https://stackoverflow.com/questions/10190358/how-to-use-emacsclient-on-root-files-using-sudo-and-a-single-daemon#10191436
+#alias e="emacsclient -t -a=" #emacs
+#alias se="SUDO_EDITOR='emacsclient -t -a=' sudoedit" #sudo emacs
+#alias ew="emacsclient -c --no-wait -a=" #emacs window
+#alias sew="SUDO_EDITOR='emacsclient -c -a=' sudoedit" #sudo emacs window
+alias wcl="wc -l"
+TMUX_SESSION_NAME=automagic
+alias t="tmux attach -t $TMUX_SESSION_NAME || tmux new -s $TMUX_SESSION_NAME"
+#alias t="tmux attach || tmux"
+alias tdt="tmux detach"
+alias s="screen -r||screen -q"
+#alias n="nemo . &"
+#alias sopen="gksu xdg-open"
+#alias sudo='sudo '
+
+#alias apt='sudo apt'
+#alias ins='sudo apt install'
+#alias rem='sudo apt autoremove --purge'
+#alias upd='sudo apt update;apt list --upgradeable'
+#alias upg='sudo apt upgrade;cat /var/run/reboot-required||echo "no restart needed :)"'
+#alias dupg='sudo apt dist-upgrade;cat /var/run/reboot-required||echo "no restart needed :)"'
+
+#alias pacman=sudo pacman"
+alias ins="sudo pacman -Sy"
+alias rem="sudo pacman -Rdd"
+alias upd="sudo pacman -Syy"
+alias upg="sudo pacman -Syu"
+
+#alias dnf="sudo dnf"
+#alias ins="sudo dnf install"
+#alias rem="sudo dnf remove"
+#alias upd="sudo dnf check-update"
+#alias upg="sudo dnf upgrade"
+
+alias ll="ls -lah"
+alias l="ls -lah"
+unalias l
+l(){
+    cols=`tput cols`
+    if [[ $# -eq 0 ]]; then
+	      l .
+    fi
+    while [[ $# -ne 0 ]]; do
+        printf '=%.0s' {1..$cols}
+        echo
+        if [[ -f "$1" ]]; then
+            cat "$1"
+        else
+            ls -lAh "$1"
+        fi
+        printf '-%.0s' {1..$cols}
+        echo
+        ls -lAh -d "$1"
+        shift
+    done
+}
+
+open(){
+    if [[ "$#" -eq 1 ]] && echo "$1" | grep "\.html$" > /dev/null; then
+        #browser=`xdg-settings get default-web-browser`
+	#kreadconfig5 --file /usr/share/applications/$browser --group "Desktop Action new-window" --key Exec
+        #gtk-launch firedragon.desktop "$1" &
+        #TODO get gtk-launch to open in a new window
+        librewolf --new-window "$1" &
+    else
+        xdg-open $@ &
+    fi
+}
+
+f(){
+    #fm=nautilus
+    #fm=nemo
+    fm=dolphin
+    if [[ $# == 0 ]]
+    then
+        $fm . &
+    else
+        $fm $@ &
+    fi
+}
+
+wind(){
+    find $@ | wc -l
+}
+
+
+activate(){
+    source "$@/bin/activate"
+}
+
+#key bindings
+#bindkey '^H' backward-kill-word
+#bindkey -M emacs '^[[3;5~' kill-word
+bindkey -M emacs '^[[3;3~' kill-word
+#to find a key combo's code, run `cat`, then type the combo
+#https://superuser.com/questions/997593/why-does-zsh-insert-a-when-i-press-the-delete-key
+
+#autocomplete
+setopt completealiases
+
+#The program 'xyz' is not currently installed. You can install it by typing...
+#. /etc/zsh_command_not_found
+
+notica() { curl --data "d:$*" "https://notica.us/?gcbIuM" ; }
+notica-web() {xdg-open "https://notica.us/?gcbIuM"}
+
+
+
+
+
+# Keybindings section
+bindkey -e
+bindkey '^[[7~' beginning-of-line                               # Home key
+bindkey '^[[H' beginning-of-line                                # Home key
+if [[ "${terminfo[khome]}" != "" ]]; then
+  bindkey "${terminfo[khome]}" beginning-of-line                # [Home] - Go to beginning of line
+fi
+bindkey '^[[8~' end-of-line                                     # End key
+bindkey '^[[F' end-of-line                                     # End key
+if [[ "${terminfo[kend]}" != "" ]]; then
+  bindkey "${terminfo[kend]}" end-of-line                       # [End] - Go to end of line
+fi
+bindkey '^[[2~' overwrite-mode                                  # Insert key
+bindkey '^[[3~' delete-char                                     # Delete key
+bindkey '^[[C'  forward-char                                    # Right key
+bindkey '^[[D'  backward-char                                   # Left key
+bindkey '^[[5~' history-beginning-search-backward               # Page up key
+bindkey '^[[6~' history-beginning-search-forward                # Page down key
+
+# Navigate words with ctrl+arrow keys
+bindkey '^[Oc' forward-word                                     #
+bindkey '^[Od' backward-word                                    #
+bindkey '^[[1;5D' backward-word                                 #
+bindkey '^[[1;5C' forward-word                                  #
+bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
+bindkey '^[[Z' undo                                             # Shift+tab undo last action
+
+export LD_PRELOAD=""
+export EDITOR="vim"
+export PATH="$HOME/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/usr/bin/core_perl:/usr/games/bin:$PATH"
+
+# alias
+#alias c="clear"
+alias cur="curl --user-agent 'noleak'"
+#alias l="ls -ahls --color=auto"
+#alias r="reset"
+#alias shred="shred -zf"
+#alias sl="ls --color=auto"
+alias vi="vim"
+alias ls="ls --color=auto"
+alias dir="dir --color=auto"
+alias vdir="vdir --color=auto"
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+alias wget="wget -c --user-agent 'noleak'"
+alias dd="dd status=progress"
+alias cp="cp -i"                          # confirm before overwriting something
+alias rm="rm -i"
+alias mv="mv -i"
+alias df="df -h"                          # human-readable sizes
+alias free="free -h"
+alias du="du -h"
+
+source ~/.config/sudo.plugin.zsh

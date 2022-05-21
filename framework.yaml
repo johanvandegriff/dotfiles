@@ -1,0 +1,11 @@
+---
+- name: set up framework
+  hosts: localhost
+  roles:
+    - environment
+    - zsh
+    - git
+    - tmux
+    - wezterm
+    - nethack
+#  tasks:

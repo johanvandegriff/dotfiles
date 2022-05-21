@@ -1,0 +1,11 @@
+- name: make env dir
+  file:
+    path: "~/.config/environment.d/"
+    state: directory
+- name: symlink env dotfile
+  file:
+    src: "{{role_path}}/files/profile.conf"
+    path: "~/.config/environment.d/profile.conf"
+    state: link
+#  include_role:
+#    name: dotfiles

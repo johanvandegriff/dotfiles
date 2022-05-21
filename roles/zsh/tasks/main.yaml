@@ -1,0 +1,14 @@
+- name: install zsh
+  ansible.builtin.package:
+    name:
+      - zsh
+    state: present
+    update_cache: yes
+  become: yes
+- name: symlink zsh dotfile
+  file:
+    src: "{{role_path}}/files/zshrc"
+    path: "~/.zshrc"
+    state: link
+#  include_role:
+#    name: dotfiles
