@@ -2,5 +2,5 @@ whereami=$(dirname "$0")
 cd "$whereami"
 
 sudo systemctl stop fprintd
-ansible-playbook -K framework.yaml
+ANSIBLE_COW_SELECTION=tux ansible-playbook -K "$1".yaml
 sudo systemctl start fprintd
