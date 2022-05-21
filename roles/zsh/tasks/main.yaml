@@ -10,5 +10,13 @@
     src: "{{role_path}}/files/zshrc"
     path: "~/.zshrc"
     state: link
+- name: get zsh sudo plugin
+  get_url:
+    url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/sudo/sudo.plugin.zsh"
+    dest: ~/.config/sudo.plugin.zsh
+    checksum: sha256:43755c8ed499fde9969950ffde22c46b5637f441472c89a5d515438940e5cd3f
+#- name: get zsh sudo plugin
+#  shell:
+#    curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/sudo/sudo.plugin.zsh > ~/.config/sudo.plugin.zsh
 #  include_role:
 #    name: dotfiles
