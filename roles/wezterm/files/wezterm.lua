@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm';
 
 return {
-  font_size = 13,
+  font_size = 14,
   line_height = 0.85,
   window_background_image = "/home/user/nextcloud/media/wallpapers/bg-1536-dark.png",
   hide_tab_bar_if_only_one_tab = true,
