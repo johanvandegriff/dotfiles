@@ -1,0 +1,1 @@
+~/nextcloud/configs/install
