@@ -19,6 +19,30 @@ https://extensions.gnome.org/extension/1031/topicons/
 #auth            sufficient      pam_fprintd.so
 
 https://askubuntu.com/questions/332264/13-04-more-than-four-workspace-shortcuts-in-gnome-flashback-no-effects#427448
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-1 "['<Super>1']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-2 "['<Super>2']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-3 "['<Super>3']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-4 "['<Super>4']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-5 "['<Super>5']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-6 "['<Super>6']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-7 "['<Super>7']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-8 "['<Super>8']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-9 "['<Super>9']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-10 "['<Super>0']"
+
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-1 "['<Alt><Super>1']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-2 "['<Alt><Super>2']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-3 "['<Alt><Super>3']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-4 "['<Alt><Super>4']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-5 "['<Alt><Super>5']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-6 "['<Alt><Super>6']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-7 "['<Alt><Super>7']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-8 "['<Alt><Super>8']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-9 "['<Alt><Super>9']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-10 "['<Alt><Super>0']"
+
+
+#old:
 dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-1 "['<Super>grave']"
 dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-2 "['<Super>1']"
 dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-3 "['<Super>2']"
