@@ -29,6 +29,41 @@ this disables the new, unstable features of the wifi card and after reboot, spee
 
 https://linux-hardware.org/?probe=8c2272b18b
 
+
+
+
+
+
+
+sudo nano /usr/share/X11/xkb/symbols/shift
+partial modifier_keys
+xkb_symbols "both_capslock" {
+  include "shift(lshift_both_capslock)"
+  include "shift(rshift_both_capslock)"
+  key <RALT> { [ Home ] };
+  key <RCTL> { [ End ] };
+  key <CAPS> { [ Control_R ] };
+};
+
+
+https://www.pragmaticlinux.com/2021/06/manually-install-a-gnome-shell-extension-from-a-zip-file/
+https://extensions.gnome.org/extension/1031/topicons/
+#copied from /etc/pam.d/polkit-1 into:
+#sudo nano /etc/pam.d/sxlock
+#auth            sufficient      pam_unix.so try_first_pass likeauth nullok
+#auth            sufficient      pam_fprintd.so
+
+
+https://dev.to/mattstratton/making-powerline-work-in-visual-studio-code-terminal-1m7
+
+
+~/nextcloud/configs/install
+
+
+sudo pacman-mirrors --fasttrack && sudo pacman -Syyu
+
+
+
 # Old
 /etc/tlp.conf
 PCIE_ASPM_ON_BAT=powersupersave

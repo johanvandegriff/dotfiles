@@ -3,7 +3,7 @@ A repo to manage the setup of my computers. Based on [Nikita's dotfiles repo](ht
 
 ## Running
 ```bash
-./run.sh framework
+./run.sh
 ```
 OR
 ```bash
@@ -18,7 +18,7 @@ These *plays* act as "entrypoint" of my configuration.
  - A *play* is composed of multiple *roles*, with some extra configuration on top.
 
 ### Plays
- - [framework](./framework.yaml): My framework laptop running Manjaro Linux.
+ - [framework](./framework.yaml): My framework laptop running Manjaro Linux, with Gnome Wayland.
 
 ### Roles
  - [environment](./roles/environment): environment variables for terminal and GUI alike
@@ -27,4 +27,5 @@ These *plays* act as "entrypoint" of my configuration.
  - [tmux](./roles/tmux): install and configure tmux
  - [wezterm](./roles/wezterm): install and configure wezterm, a terminal with some cool features such as image support
  - [nethack](./roles/nethack): install and configure nethack
+ - [gnome-settings](./roles/gnome-settings): configure gnome to use 4 finger swipe for workspace, 3 finger swipe for various keybinds, make caps lock ctrl, enable window focus on hover, set up workspace keybinds, etc.
  - [template](./roles/template): a blank slate for installing and configuring something (just replace ? with the software name)

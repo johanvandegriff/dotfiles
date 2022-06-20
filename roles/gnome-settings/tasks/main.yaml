@@ -1,0 +1,112 @@
+- name: check if workspace hotkeys are set up
+  ansible.builtin.command: dconf read /org/gnome/desktop/wm/keybindings/switch-to-workspace-10
+  register: workspace_hotkeys
+  ignore_errors: true
+  changed_when: False
+- name: configure gnome workspace shortcuts, capslock as ctrl, and window focus on mouse hover
+  when: workspace_hotkeys.stdout != "['<Super>0']"
+# https://askubuntu.com/questions/332264/13-04-more-than-four-workspace-shortcuts-in-gnome-flashback-no-effects#427448
+  shell:
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-1 "['<Super>1']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-2 "['<Super>2']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-3 "['<Super>3']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-4 "['<Super>4']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-5 "['<Super>5']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-6 "['<Super>6']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-7 "['<Super>7']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-8 "['<Super>8']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-9 "['<Super>9']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-10 "['<Super>0']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-1 "['<Alt><Super>1']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-2 "['<Alt><Super>2']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-3 "['<Alt><Super>3']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-4 "['<Alt><Super>4']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-5 "['<Alt><Super>5']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-6 "['<Alt><Super>6']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-7 "['<Alt><Super>7']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-8 "['<Alt><Super>8']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-9 "['<Alt><Super>9']" && \
+    dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-10 "['<Alt><Super>0']" && \
+    gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier', 'shift:both_capslock']" && \
+    gsettings set org.gnome.desktop.wm.preferences focus-mode sloppy
+# https://www.beatworm.co.uk/blog/keyboards/gnome-wayland-xkb
+# https://www.reddit.com/r/pop_os/comments/gc88xw/2004_focus_on_mouse_hover_always_autoraises_window/
+
+- name: check if 4 finger swipe is enabled
+  ansible.builtin.command: grep 'const GESTURE_FINGER_COUNT = 4;' /usr/lib64/gnome-shell/libgnome-shell.so
+  register: four_finger_swipe
+  ignore_errors: true
+  changed_when: False
+- name: change gnome 3 finger swipe to 4
+  when: four_finger_swipe is failed
+# https://www.reddit.com/r/gnome/comments/qrhu0e/guide_to_customize_gnome_40_touchpad_gestures_on/
+  shell:
+    sed -i 's/const GESTURE_FINGER_COUNT = 3;/const GESTURE_FINGER_COUNT = 4;/g' /usr/lib64/gnome-shell/libgnome-shell.so
+  become: yes
+
+- name: check if gestures is installed
+  ansible.builtin.command: which gestures
+  register: which_gestures
+  ignore_errors: true
+  changed_when: False
+- name: install gestures
+  when: which_gestures is failed
+  ansible.builtin.package:
+    name:
+      - libinput-gestures
+      - gestures
+    state: present
+    update_cache: yes
+  become: yes
+- name: setup gestures
+  when: which_gestures is failed
+  shell:
+    libinput-gestures-setup service && \
+    systemctl --user enable libinput-gestures.service && \
+    systemctl --user start libinput-gestures.service
+
+- name: check if ydotool is installed
+  ansible.builtin.command: which ydotool
+  register: which_ydotool
+  ignore_errors: true
+  changed_when: False
+- name: build ydotool
+  when: which_ydotool is failed
+# https://github.com/ReimuNotMoe/ydotool/issues/73
+  shell:
+    git clone https://aur.archlinux.org/ydotool-bin.git && \
+    cd ydotool-bin && \
+    makepkg -s && \
+    cd ..
+- name: install ydotool (as root)
+  when: which_ydotool is failed
+# ydotool-bin-1.0.1-3-x86_64.pkg.tar.zst
+  shell:
+    pacman -U --noconfirm ydotool-bin/ydotool-bin-*.pkg.tar.zst && \
+    sed -i 's,ExecStart=/usr/local/bin/ydotoold,ExecStart=/usr/local/bin/ydotoold --socket-perm 0666,g' /lib/systemd/system/ydotool.service && \
+    rm -r ydotool-bin && \
+    sudo systemctl start ydotool.service && \
+    sudo systemctl enable ydotool.service
+  become: yes
+
+- name: symlink gestures dotfile
+  file:
+    src: "{{role_path}}/files/libinput-gestures.conf"
+    path: "~/.config/libinput-gestures.conf"
+    state: link
+# might need this but probably not: sudo gpasswd -a $USER input
+
+- name: check if new cheese icon is set
+  ansible.builtin.command: grep 'Icon={{role_path}}/files/cheese.png' /usr/share/applications/org.gnome.Cheese.desktop
+  register: cheese_icon_set
+  ignore_errors: true
+  changed_when: False
+- name: set cheese icon
+  when: cheese_icon_set is failed
+# https://www.reddit.com/r/gnome/comments/v0bvtu/say_cheese_i_was_bored_so_thought_to_make_an_icon/
+  shell:
+    sed -i 's,Icon=org.gnome.Cheese,Icon={{role_path}}/files/cheese.png,g' /usr/share/applications/org.gnome.Cheese.desktop
+  become: yes
+
+#  include_role:
+#    name: dotfiles
