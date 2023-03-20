@@ -1,0 +1,36 @@
+- name: install nix
+  package:
+    name:
+      - nix-bin
+      - nix-setup-systemd
+    state: present
+    update_cache: yes
+  become: yes
+
+#TODO only add if it doesn't have it already
+- name: add nixpkgs channel
+  shell:
+    nix-channel --add https://nixos.org/channels/nixpkgs-unstable && \
+    nix-channel --update
+  become: yes
+#- name: check if nix is installed
+#  ansible.builtin.command: which nix
+#  register: which_nix
+#  ignore_errors: true
+#  changed_when: False
+#- name: prep /nix installation dir
+#  when: which_nix is failed
+#  file:
+#    path: /nix
+#    state: directory
+#    mode: '0755'
+#    owner: '{{ ansible_user_id }}'
+##  shell:
+##    mkdir -m 0755 /nix && chown {{ ansible_user_id }} /nix
+#  become: yes
+#- name: install nix
+#  when: which_nix is failed
+#  shell:
+#    curl -L https://nixos.org/nix/install > nix.sh && \
+#    sh ./nix.sh --no-daemon && \
+#    rm nix.sh

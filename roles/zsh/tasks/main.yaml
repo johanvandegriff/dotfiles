@@ -5,18 +5,30 @@
     state: present
     update_cache: yes
   become: yes
+- name: check if oh-my-zsh is installed
+  ansible.builtin.command: test -d ~/.oh-my-zsh
+  register: oh_installed
+  ignore_errors: true
+  changed_when: False
+- name: install oh-my-zsh
+  when: oh_installed is failed
+  shell:
+    RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
+    mv ~/.zshrc ~/.zshrc.oh-my-zsh && \
+    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 - name: symlink zsh dotfile
   file:
     src: "{{role_path}}/files/zshrc"
     path: "~/.zshrc"
     state: link
-- name: get zsh sudo plugin
-  get_url:
-    url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/sudo/sudo.plugin.zsh"
-    dest: ~/.config/sudo.plugin.zsh
-    checksum: sha256:43755c8ed499fde9969950ffde22c46b5637f441472c89a5d515438940e5cd3f
+- name: symlink zsh theme
+  file:
+    src: "{{role_path}}/files/my.zsh-theme"
+    path: "~/.oh-my-zsh/themes/my.zsh-theme"
+    state: link
 #- name: get zsh sudo plugin
-#  shell:
-#    curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/sudo/sudo.plugin.zsh > ~/.config/sudo.plugin.zsh
-#  include_role:
-#    name: dotfiles
+#  get_url:
+#    url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/sudo/sudo.plugin.zsh"
+#    dest: ~/.config/sudo.plugin.zsh
+#    checksum: sha256:a57ca50dd7607af2651db558151cfb2fea0139bf2141b1968b87bb67d95c2c59

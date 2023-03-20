@@ -1,7 +1,16 @@
 - name: install nethack
+  when: ansible_os_family != "Debian"
   ansible.builtin.package:
     name:
       - nethack
+    state: present
+    update_cache: yes
+  become: yes
+- name: install nethack (debian)
+  when: ansible_os_family == "Debian"
+  ansible.builtin.package:
+    name:
+      - nethack-console
     state: present
     update_cache: yes
   become: yes

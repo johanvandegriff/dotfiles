@@ -5,10 +5,14 @@
     state: present
     update_cache: yes
   become: yes
+- name: create git config dir
+  file:
+    path: "~/.config/git"
+    state: directory
 - name: symlink git dotfile
   file:
     src: "{{role_path}}/files/gitconfig"
-    path: "~/.gitconfig"
+    path: "~/.config/git/config"
     state: link
 #  include_role:
 #    name: dotfiles

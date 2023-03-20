@@ -1,9 +1,26 @@
 - name: install wezterm
+  when: ansible_os_family != "Debian"
   ansible.builtin.package:
     name:
       - wezterm
     state: present
     update_cache: yes
+  become: yes
+- name: check if wezterm is installed (debian)
+  when: ansible_os_family == "Debian"
+  ansible.builtin.command: which wezterm
+  register: which_wezterm
+  ignore_errors: true
+  changed_when: False
+- name: install wezterm (debian)
+  when: ansible_os_family == "Debian" and which_wezterm is failed
+  shell:
+    curl -LO https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu22.04.deb && \
+    dpkg -i wezterm-nightly.Ubuntu22.04.deb && \
+    rm wezterm-nightly.Ubuntu22.04.deb
+#    curl -LO https://github.com/wez/wezterm/releases/download/20220807-113146-c2fee766/wezterm-20220807-113146-c2fee766.Ubuntu20.04.deb && \
+#    apt install -y ./wezterm-20220807-113146-c2fee766.Ubuntu20.04.deb && \
+#    rm ./wezterm-20220807-113146-c2fee766.Ubuntu20.04.deb
   become: yes
 - name: make wezterm dir
   file:

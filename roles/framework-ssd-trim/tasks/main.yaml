@@ -1,0 +1,10 @@
+# https://community.frame.work/t/enable-trim-unmap-on-the-storage-expansion-card/8885
+- name: symlink ssd trim dotfile
+  file:
+    src: "{{role_path}}/files/10-framework-sec-trim.rules"
+    path: "/etc/udev/rules.d/10-framework-sec-trim.rules"
+    state: link
+  become: yes
+#  include_role:
+#    name: dotfiles
+

@@ -1,14 +1,14 @@
 ---
-- name: set up framework
+- name: set up dell latitude 7490
   hosts: localhost
   roles:
     - utils
-    - environment
+#    - environment
     - zsh
     - git
     - tmux
     - wezterm
-    - nethack
+#    - nethack
     - gnome-settings
-    - framework-ssd-trim
+#    - nix
 #  tasks:

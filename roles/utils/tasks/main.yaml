@@ -1,0 +1,11 @@
+- name: install utils
+  ansible.builtin.package:
+    name:
+      - curl
+      - arp-scan
+      - meld
+      - htop
+      - glances
+    state: present
+    update_cache: yes
+  become: yes

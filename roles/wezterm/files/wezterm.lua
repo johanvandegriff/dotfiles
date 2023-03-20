@@ -1,9 +1,14 @@
 local wezterm = require 'wezterm';
 
 return {
+--  enable_wayland = true,
+  window_background_opacity = 1.0,
   font_size = 14,
   line_height = 0.85,
   window_background_image = "/home/user/nextcloud/media/wallpapers/bg-1536-dark.png",
+--  initial_rows = 47,
+--  initial_cols = 72,
+--  initial_cols = 144,
   hide_tab_bar_if_only_one_tab = true,
   exit_behavior="Close",
   scrollback_lines = 100000,
