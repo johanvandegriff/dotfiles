@@ -1,3 +1,8 @@
+only chsh if it isn't zsh already
+
+only install gnome extensions if they aren't installed already
+maybe install a list of gnome extensions programatically?
+
 https://community.frame.work/t/linux-battery-life-tuning/6665/156.
 /etc/default/grub.d/post-resume-power-draw-workaround.cfg
 contents: 'GRUB_CMDLINE_LINUX_DEFAULT="${GRUB_CMDLINE_LINUX_DEFAULT} nvme.noacpi=1"'

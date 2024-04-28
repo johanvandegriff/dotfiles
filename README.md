@@ -29,7 +29,8 @@ These *plays* act as "entrypoint" of my configuration.
  - [tmux](./roles/tmux): install and configure tmux
  - [wezterm](./roles/wezterm): install and configure wezterm, a terminal with some cool features such as image support
  - [nethack](./roles/nethack): install and configure nethack
- - [gnome-settings](./roles/gnome-settings): configure gnome to use 4 finger swipe for workspace, 3 finger swipe for various keybinds, make caps lock ctrl, enable window focus on hover, set up workspace keybinds, etc.
+ - [gnome-settings](./roles/gnome-settings): configure gnome to use 3 finger swipe for various keybinds, make caps lock ctrl, enable window focus on hover, set up workspace keybinds, etc.
+ - [gnome-extensions](./roles/gnome-extensions): install gnome extensions such as 4-finger gesture, alt-tab move mouse, binary clock, middle click to close window in overview, and clown
  - [nix](./roles/nix): install the Nix package manager (not currently used)
  - [framework-ssd-trim](./roles/framework-ssd-trim): enable SSD trim for booting from USB on the framework laptop
  - [huion-driver](./roles/huion-driver): install drivers for the huion kamvas pro 13 drawing tablet (should work for other models too)

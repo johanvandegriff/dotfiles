@@ -1,0 +1,17 @@
+#these are skipped for now until my pull requests are merged:
+#- name: install alt-tab move mouse extension
+#  shell: "{{role_path}}/files/install_gnome_extension.sh alt-tab-move-mouse@buzztaiki.github.com"
+#- name: install binary clock extension
+#  shell: "{{role_path}}/files/install_gnome_extension.sh gbinaryclock@isopolito"
+- name: install 4-finger gesture extension
+  shell: "{{role_path}}/files/install_gnome_extension.sh swap-finger-gestures-3-4@icedman.github.com"
+- name: install middle click close in overview extension
+  shell: "{{role_path}}/files/install_gnome_extension.sh middleclickclose@paolo.tranquilli.gmail.com"
+- name: install clown button extension
+  shell: "{{role_path}}/files/install_gnome_extension.sh clown@markocic"
+- name: copy monochrome clown emoji icon
+  copy:
+    src: "{{role_path}}/files/clown-face-mono.svg"
+    dest: "~/.local/share/gnome-shell/extensions/clown@markocic/src/icons/clown-face.svg"
+#  include_role:
+#    name: dotfiles
