@@ -6,6 +6,9 @@
       - meld
       - htop
       - glances
+      - jq
+      - plocate
+      - trash-cli
     state: present
     update_cache: yes
   become: yes

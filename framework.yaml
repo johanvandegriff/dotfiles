@@ -7,8 +7,9 @@
     - zsh
     - git
     - tmux
-    - wezterm
+    # - wezterm
     - nethack
     - gnome-settings
     - framework-ssd-trim
+    - huion-driver
 #  tasks:

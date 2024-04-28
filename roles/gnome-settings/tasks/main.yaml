@@ -61,59 +61,63 @@
 # https://www.beatworm.co.uk/blog/keyboards/gnome-wayland-xkb
 # https://www.reddit.com/r/pop_os/comments/gc88xw/2004_focus_on_mouse_hover_always_autoraises_window/
 
-- name: check if 4 finger swipe is enabled (arch)
-  when: ansible_os_family == "Archlinux"
-  ansible.builtin.command: grep 'const GESTURE_FINGER_COUNT = 4;' /usr/lib64/gnome-shell/libgnome-shell.so
-  register: four_finger_swipe
-  ignore_errors: true
-  changed_when: False
-- name: change gnome 3 finger swipe to 4 (arch)
-  when: ansible_os_family == "Archlinux" and four_finger_swipe is failed
-# https://www.reddit.com/r/gnome/comments/qrhu0e/guide_to_customize_gnome_40_touchpad_gestures_on/
-  shell:
-    sed -i 's/const GESTURE_FINGER_COUNT = 3;/const GESTURE_FINGER_COUNT = 4;/g' /usr/lib64/gnome-shell/libgnome-shell.so
-  become: yes
+# 4 finger swipe can now be done with the "Swap Finger Gestures (3 to 4)" extension
+# - name: check if 4 finger swipe is enabled (arch)
+#   when: ansible_os_family == "Archlinux"
+#   ansible.builtin.command: grep 'const GESTURE_FINGER_COUNT = 4;' /usr/lib64/gnome-shell/libgnome-shell.so
+#   register: four_finger_swipe
+#   ignore_errors: true
+#   changed_when: False
+# - name: change gnome 3 finger swipe to 4 (arch)
+#   when: ansible_os_family == "Archlinux" and four_finger_swipe is failed
+# # https://www.reddit.com/r/gnome/comments/qrhu0e/guide_to_customize_gnome_40_touchpad_gestures_on/
+#   shell:
+#     sed -i 's/const GESTURE_FINGER_COUNT = 3;/const GESTURE_FINGER_COUNT = 4;/g' /usr/lib64/gnome-shell/libgnome-shell.so
+#   become: yes
 
-- name: check if 4 finger swipe is enabled (debian)
-  when: ansible_os_family == "Debian"
-  ansible.builtin.command: grep 'const GESTURE_FINGER_COUNT = 4;' /usr/lib/gnome-shell/libgnome-shell.so
-  register: four_finger_swipe_debian
-  ignore_errors: true
-  changed_when: False
-- name: change gnome 3 finger swipe to 4 (debian)
-  when: ansible_os_family == "Debian" and four_finger_swipe_debian is failed
-# https://www.reddit.com/r/gnome/comments/qrhu0e/guide_to_customize_gnome_40_touchpad_gestures_on/
-  shell:
-    sed -i 's/const GESTURE_FINGER_COUNT = 3;/const GESTURE_FINGER_COUNT = 4;/g' /usr/lib/gnome-shell/libgnome-shell.so
-  become: yes
+# - name: check if 4 finger swipe is enabled (debian)
+#   when: ansible_os_family == "Debian"
+#   ansible.builtin.command: grep 'const GESTURE_FINGER_COUNT = 4;' /usr/lib/gnome-shell/libshell-14.so
+#   register: four_finger_swipe_debian
+#   ignore_errors: true
+#   changed_when: False
+# - name: change gnome 3 finger swipe to 4 (debian)
+#   when: ansible_os_family == "Debian" and four_finger_swipe_debian is failed
+# # https://www.reddit.com/r/gnome/comments/qrhu0e/guide_to_customize_gnome_40_touchpad_gestures_on/
+#   shell:
+#     sed -i 's/const GESTURE_FINGER_COUNT = 3;/const GESTURE_FINGER_COUNT = 4;/g' /usr/lib/gnome-shell/libshell-14.so
+#   become: yes
 
-- name: check if gestures is installed (arch)
-  when: ansible_os_family == "Archlinux"
-  ansible.builtin.command: which gestures
-  register: which_gestures
-  ignore_errors: true
-  changed_when: False
-- name: install gestures (arch)
-  when: ansible_os_family == "Archlinux" and which_gestures is failed
-  ansible.builtin.package:
-    name:
-      - libinput-gestures
-      - gestures
-    state: present
-    update_cache: yes
-  become: yes
+# - name: check if gestures is installed (arch)
+#   when: ansible_os_family == "Archlinux"
+#   ansible.builtin.command: which gestures
+#   register: which_gestures
+#   ignore_errors: true
+#   changed_when: False
+# - name: install gestures (arch)
+#   when: ansible_os_family == "Archlinux" and which_gestures is failed
+#   ansible.builtin.package:
+#     name:
+#       - libinput-gestures
+#       - gestures
+#     state: present
+#     update_cache: yes
+#   become: yes
 
-- name: setup gestures (arch)
-  when: ansible_os_family == "Archlinux" and which_gestures is failed
-  shell:
-    libinput-gestures-setup service && \
-    systemctl --user enable libinput-gestures.service && \
-    systemctl --user start libinput-gestures.service
+# - name: setup gestures (arch)
+#   when: ansible_os_family == "Archlinux" and which_gestures is failed
+#   shell:
+#     libinput-gestures-setup service && \
+#     systemctl --user enable libinput-gestures.service && \
+#     systemctl --user start libinput-gestures.service
 
 - name: install libinput-gestures dependencies
   ansible.builtin.package:
     name:
       - libinput-tools
+      - libinput-dev
+      - ydotool
+      - ydotoold
     state: present
     update_cache: yes
   become: yes
@@ -148,61 +152,61 @@
     append: yes
   become: yes
 
-- name: install ydotool build dependencies
-  ansible.builtin.package:
-    name:
-      - cmake
-      - scdoc
-      - checkinstall
-    state: present
-    update_cache: yes
-  become: yes
+# - name: install ydotool build dependencies
+#   ansible.builtin.package:
+#     name:
+#       - cmake
+#       - scdoc
+#       - checkinstall
+#     state: present
+#     update_cache: yes
+#   become: yes
 
-- name: check if ydotool is installed
-  ansible.builtin.command: which ydotool
-  register: which_ydotool
-  ignore_errors: true
-  changed_when: False
+# - name: check if ydotool is installed
+#   ansible.builtin.command: which ydotool
+#   register: which_ydotool
+#   ignore_errors: true
+#   changed_when: False
 
-- name: build ydotool (arch)
-  when: ansible_os_family == "Archlinux" and which_ydotool is failed
-# https://github.com/ReimuNotMoe/ydotool/issues/73
-  shell:
-    git clone https://aur.archlinux.org/ydotool-bin.git && \
-    cd ydotool-bin && \
-    makepkg -s && \
-    cd ..
-- name: install ydotool as root (arch)
-  when: ansible_os_family == "Archlinux" and which_ydotool is failed
-# ydotool-bin-1.0.1-3-x86_64.pkg.tar.zst
-  shell:
-    pacman -U --noconfirm ydotool-bin/ydotool-bin-*.pkg.tar.zst && \
-    sed -i 's,ExecStart=/usr/local/bin/ydotoold,ExecStart=/usr/local/bin/ydotoold --socket-perm 0666,g' /lib/systemd/system/ydotool.service && \
-    rm -r ydotool-bin && \
-    sudo systemctl start ydotool.service && \
-    sudo systemctl enable ydotool.service
-  become: yes
+# - name: build ydotool (arch)
+#   when: ansible_os_family == "Archlinux" and which_ydotool is failed
+# # https://github.com/ReimuNotMoe/ydotool/issues/73
+#   shell:
+#     git clone https://aur.archlinux.org/ydotool-bin.git && \
+#     cd ydotool-bin && \
+#     makepkg -s && \
+#     cd ..
+# - name: install ydotool as root (arch)
+#   when: ansible_os_family == "Archlinux" and which_ydotool is failed
+# # ydotool-bin-1.0.1-3-x86_64.pkg.tar.zst
+#   shell:
+#     pacman -U --noconfirm ydotool-bin/ydotool-bin-*.pkg.tar.zst && \
+#     sed -i 's,ExecStart=/usr/local/bin/ydotoold,ExecStart=/usr/local/bin/ydotoold --socket-perm 0666,g' /lib/systemd/system/ydotool.service && \
+#     rm -r ydotool-bin && \
+#     sudo systemctl start ydotool.service && \
+#     sudo systemctl enable ydotool.service
+#   become: yes
 
-- name: build ydotool
-  when: which_ydotool is failed
-#https://askubuntu.com/questions/1413829/how-can-i-install-the-latest-ydotool-1-0-1-keyboard-automation-tool-working-on
-  shell:
-    git clone https://github.com/ReimuNotMoe/ydotool && \
-    cd ydotool && \
-    mkdir build && cd build && \
-    cmake .. && \
-    make -j `nproc` && \
-    make install && \
-    cd ../.. && \
-    rm -rf ydotool && \
-    chmod +s /usr/local/bin/ydotool && \
-    ln -s /usr/local/lib/systemd/user/ydotool.service /etc/systemd/system/ && \
-    systemctl daemon-reload && \
-    service ydotool start
+# - name: build ydotool
+#   when: which_ydotool is failed
+# #https://askubuntu.com/questions/1413829/how-can-i-install-the-latest-ydotool-1-0-1-keyboard-automation-tool-working-on
+#   shell:
+#     git clone https://github.com/ReimuNotMoe/ydotool && \
+#     cd ydotool && \
+#     mkdir build && cd build && \
+#     cmake .. && \
+#     make -j `nproc` && \
+#     make install && \
+#     cd ../.. && \
+#     rm -rf ydotool && \
+#     chmod +s /usr/local/bin/ydotool && \
+#     ln -s /usr/local/lib/systemd/user/ydotool.service /etc/systemd/system/ && \
+#     systemctl daemon-reload && \
+#     service ydotool start
 
-#    checkinstall --install=no --pkgname=ydotool-custom --default && \
-#    apt install -y ./ydotool-custom_*_amd64.deb && \
-  become: yes
+# #    checkinstall --install=no --pkgname=ydotool-custom --default && \
+# #    apt install -y ./ydotool-custom_*_amd64.deb && \
+#   become: yes
 
 - name: symlink gestures dotfile
   file:

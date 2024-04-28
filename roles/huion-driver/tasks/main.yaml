@@ -1,0 +1,14 @@
+- name: check if huiontablet is installed (debian)
+  when: ansible_os_family == "Debian"
+  ansible.builtin.command: test -d /usr/lib/huiontablet
+  register: is_huion_installed
+  ignore_errors: true
+  changed_when: False
+- name: install huiontablet (debian)
+  when: ansible_os_family == "Debian" and is_huion_installed is failed
+  shell:
+    curl -LO https://driverdl.huion.com/driver/Linux/HuionTablet_v15.0.0.121.202301131103.x86_64.deb && \
+    dpkg -i HuionTablet_v15.0.0.121.202301131103.x86_64.deb && \
+    rm HuionTablet_v15.0.0.121.202301131103.x86_64.deb
+  become: yes
+#https://www.huion.com/index.php?m=content&c=index&a=lists&catid=16&myform=1&down_title=kamvas+13

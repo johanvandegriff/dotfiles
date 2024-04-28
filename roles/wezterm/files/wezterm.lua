@@ -1,11 +1,14 @@
 local wezterm = require 'wezterm';
 
 return {
+  hide_mouse_cursor_when_typing = false,
 --  enable_wayland = true,
   window_background_opacity = 1.0,
   font_size = 14,
   line_height = 0.85,
   window_background_image = "/home/user/nextcloud/media/wallpapers/bg-1536-dark.png",
+  initial_rows = 24,
+  initial_cols = 80,
 --  initial_rows = 47,
 --  initial_cols = 72,
 --  initial_cols = 144,
@@ -36,8 +39,11 @@ return {
     {key="Tab", mods="CTRL|SHIFT", action=wezterm.action{ActivateTabRelative=-1}},
     {key="Tab", mods="CTRL", action=wezterm.action{ActivateTabRelative=1}},
     {key="r", mods="CTRL|SHIFT", action="ReloadConfiguration"},
-    {key="d", mods="CTRL|SHIFT", action="ShowDebugOverlay"},
-    {key="f", mods="CTRL|SHIFT", action=wezterm.action{Search={CaseSensitiveString=""}}},
+--    {key="d", mods="CTRL|SHIFT", action="ShowDebugOverlay"},
+    {key="d", mods="CTRL|SHIFT", action=wezterm.action_callback(function(win, pane)
+      local tab, window = pane:move_to_new_window()
+    end),},
+    {key="f", mods="CTRL|SHIFT", action=wezterm.action{Search={CaseInSensitiveString=""}}},
     {key="x", mods="CTRL|SHIFT", action="ActivateCopyMode"},
     {key="Space", mods="CTRL|SHIFT", action="QuickSelect"},
     {key="\\", mods="CTRL|SHIFT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},

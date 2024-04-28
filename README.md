@@ -32,4 +32,5 @@ These *plays* act as "entrypoint" of my configuration.
  - [gnome-settings](./roles/gnome-settings): configure gnome to use 4 finger swipe for workspace, 3 finger swipe for various keybinds, make caps lock ctrl, enable window focus on hover, set up workspace keybinds, etc.
  - [nix](./roles/nix): install the Nix package manager (not currently used)
  - [framework-ssd-trim](./roles/framework-ssd-trim): enable SSD trim for booting from USB on the framework laptop
+ - [huion-driver](./roles/huion-driver): install drivers for the huion kamvas pro 13 drawing tablet (should work for other models too)
  - [template](./roles/template): a blank slate for installing and configuring something (just copy it and replace ? with the software name)
