@@ -113,6 +113,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias ChatGPU="ollama run dolphin-mistral:latest"
+alias g=ChatGPU
+alias m="maestro -e"
+
 alias c="wl-copy"
 alias v="wl-paste"
 
@@ -218,6 +222,16 @@ f(){
         $fm . &
     else
         $fm $@ &
+    fi
+}
+
+co(){
+    co=codium
+    if [[ $# == 0 ]]
+    then
+        $co .
+    else
+        $co $@
     fi
 }
 

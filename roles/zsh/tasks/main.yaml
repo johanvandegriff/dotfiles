@@ -5,6 +5,15 @@
     state: present
     update_cache: yes
   become: yes
+- name: change shell to zsh
+  shell:
+    chsh -s `which zsh` "$SUDO_USER"
+  become: yes
+- name: symlink zsh dotfile
+  file:
+    src: "{{role_path}}/files/zshrc"
+    path: "~/.zshrc"
+    state: link
 - name: check if oh-my-zsh is installed
   ansible.builtin.command: test -d ~/.oh-my-zsh
   register: oh_installed
@@ -17,11 +26,6 @@
     mv ~/.zshrc ~/.zshrc.oh-my-zsh && \
     git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-- name: symlink zsh dotfile
-  file:
-    src: "{{role_path}}/files/zshrc"
-    path: "~/.zshrc"
-    state: link
 - name: symlink zsh theme
   file:
     src: "{{role_path}}/files/my.zsh-theme"
